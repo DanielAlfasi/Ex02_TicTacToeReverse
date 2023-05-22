@@ -30,7 +30,7 @@ namespace Ex02
             int length = i_Board.SequenceSize;
             Ex02.ConsoleUtils.Screen.Clear();
             DrawBoardHeader(length);
-            for (int i = 0; i < length; i++)
+            for (int i = 0 ; i < length ; i++)
             {
                 Console.Write($"{i + 1}  ");
                 for (int j = 0; j < length; j++)
@@ -40,7 +40,7 @@ namespace Ex02
 
                 Console.WriteLine("| ");
                 Console.Write(" ");
-                for (int j = 0; j < length; j++)
+                for (int j = 0 ; j < length ; j++)
                 {
                     Console.Write("====");
                 }
@@ -52,7 +52,7 @@ namespace Ex02
         private static void DrawBoardHeader(int i_Length)
         {
             Console.Write("    ");
-            for (int i = 0; i < i_Length; i++)
+            for (int i = 0 ; i < i_Length ; i++)
             {
                 Console.Write($"{i + 1}   ");
             }

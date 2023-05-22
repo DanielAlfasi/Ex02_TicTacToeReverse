@@ -8,109 +8,117 @@ namespace Ex02
 {
     public static class ComputerPlayer
     {
-        private static eMark m_Mark = eMark.O;
+        private static eMark s_Mark = eMark.O;
 
         public static int[] FindBestMove(Board board)
         {
             int bestScore = -int.MaxValue;
-            int[] move = new int[] { -1, -1 };
-            for (int i = 0; i < board.SequenceSize; i++)
+            int[] coords = new int[]{-1,-1};
+            for (int i = 0 ; i < board.SequenceSize ; i++)
             {
-                for (int j = 0; j < board.SequenceSize; j++)
+                for (int j = 0 ; j < board.SequenceSize ; j++)
                 {
-                    // Try this spot
                     if (board.IsCellEmpty(i, j))
                     {
-                        board.UpdateBoard(i, j, m_Mark);
-                        int score = Minimax(board, 0, false);
-                        board.UndoUpdateBoard(i, j, eMark.Empty); // undo move
+                        board.UpdateBoard(i, j, s_Mark);
+                        int score = minimax(board, 0, false);
+                        board.UndoUpdateBoard(i, j, eMark.Empty);
                         if (score > bestScore)
                         {
                             bestScore = score;
-                            move[0] = i;
-                            move[1] = j;
+                            coords[0] = i;
+                            coords[1] = j;
                         }
                     }
                 }
             }
-            return move;
+            return coords;
         }
 
-        private static int Minimax(Board board, int depth, bool isMaximizing)
+        private static int minimax(Board i_Board, int i_Depth, bool i_IsMaximizing)
         {
-            // if the current board state is a terminal state, return its score
-            int score = EvaluateBoard(board);
-            if (score == 1)
-                return score;
-            if (score == -1)
-                return score;
-            if (!board.IsBoardFull())
-                return 0;
-
-            if (isMaximizing)
+            int valueToReturn;
+            int score = evaluateBoard(i_Board);
+            if (score == 1 || score == -1)
+            {
+                valueToReturn = score;
+            }
+            else if (!i_Board.IsBoardFull())
+            {
+                valueToReturn = 0;
+            } else if(i_IsMaximizing)
             {
                 int bestScore = -int.MaxValue;
-                for (int i = 0; i < board.SequenceSize; i++)
+                for (int i = 0 ; i < i_Board.SequenceSize ; i++)
                 {
-                    for (int j = 0; j < board.SequenceSize; j++)
+                    for (int j = 0 ; j < i_Board.SequenceSize ; j++)
                     {
-                        if (board.IsCellEmpty(i, j))
+                        if (i_Board.IsCellEmpty(i, j))
                         {
-                            board.UpdateBoard(i, j, m_Mark);
-                            int score1 = Minimax(board, depth + 1, false);
-                            board.UndoUpdateBoard(i, j, eMark.Empty); // undo move
+                            i_Board.UpdateBoard(i, j, s_Mark);
+                            int score1 = minimax(i_Board, i_Depth + 1, false);
+                            i_Board.UndoUpdateBoard(i, j, eMark.Empty); // undo move
                             bestScore = Math.Max(score1, bestScore);
                         }
                     }
                 }
-                return bestScore;
+                valueToReturn = bestScore;
             }
             else
             {
                 int bestScore = int.MaxValue;
-                for (int i = 0; i < board.SequenceSize; i++)
+                for (int i = 0 ; i < i_Board.SequenceSize ; i++)
                 {
-                    for (int j = 0; j < board.SequenceSize; j++)
+                    for (int j = 0 ; j < i_Board.SequenceSize ; j++)
                     {
-                        if (board.IsCellEmpty(i, j))
+                        if (i_Board.IsCellEmpty(i, j))
                         {
-                            board.UpdateBoard(i, j, eMark.X);
-                            int score2 = Minimax(board, depth + 1, true);
-                            board.UndoUpdateBoard(i, j, eMark.Empty); // undo move
+                            i_Board.UpdateBoard(i, j, eMark.X);
+                            int score2 = minimax(i_Board, i_Depth + 1, true);
+                            i_Board.UndoUpdateBoard(i, j, eMark.Empty);
                             bestScore = Math.Min(score2, bestScore);
                         }
                     }
                 }
-                return bestScore;
+                valueToReturn = bestScore;
             }
+            return valueToReturn;
         }
 
-        // Evaluate the favorability of the current board state
-        private static int EvaluateBoard(Board board)
+        private static int evaluateBoard(Board i_Board)
         {
-            for(int i = 0; i < board.SequenceSize;i++)
+            int valueToReturn = 0;
+            bool breakLoops = false;
+            for(int i = 0 ; i < i_Board.SequenceSize ; i++)
             {
-                for (int j = 0; j < board.SequenceSize; j++)
+                for (int j = 0 ; j < i_Board.SequenceSize ; j++)
                 {
-                    if (Game.IsVictory(board, i, j))
+                    if (Game.IsVictory(i_Board, i, j))
                     {
-                        if(board.CellContent(i, j) == eMark.O)
+                        if(i_Board.CellContent(i, j) == eMark.O)
                         {
-                            return -1;
+                            valueToReturn = -1;
+                            break;
                         }
-                        else if (board.CellContent(i, j) == eMark.X)
+                        else if(i_Board.CellContent(i, j) == eMark.X)
                         {
-                            return 1;
+                            valueToReturn = 1;
+                            break;
                         }
                         else
                         {
-                            return 0;
+                            valueToReturn = 0;
+                            break;
                         }
                     }
                 }
-                
+                if (breakLoops)
+                {
+                    break;
+                }
+
             }
-            return 0;
+            return valueToReturn;
         }
     }
 

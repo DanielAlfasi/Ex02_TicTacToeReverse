@@ -59,13 +59,11 @@ namespace Ex02
                 ConsoleRender.DisplayPlayersScore(i_GameEngine.Players);
             }
             string userDesicionForReset = GetUserInputForReset();
-            if(userDesicionForReset == ConsoleRender.k_NoSign)
+            if(userDesicionForReset == ConsoleRender.k_YesSign)
             {
-                return;
+                i_GameEngine.ResetGame();
+                RunGame(i_GameEngine);
             }
-            i_GameEngine.ResetGame();
-            RunGame(i_GameEngine);
-
         }
 
         private static bool BoardSizeInputValidator(string i_String)
@@ -99,8 +97,6 @@ namespace Ex02
             return ConsoleInputGenericValidator(IsIntOrQ, i_RequestMessage, i_RequestMessageInvalid);
         }
 
-
-
         private static string GetUserInputForReset()
         {
             return ConsoleInputGenericValidator(IsYOrN, ConsoleRender.k_PlayAnotherRoundRequest, ConsoleRender.k_PlayAnotherRoundRequestInvalid);
@@ -108,14 +104,16 @@ namespace Ex02
 
         public static ePlayerType GetSecondPlayerType()
         {
+            ePlayerType typeToReturn;
             if(GetPlayerTypeInt() == 1)
             {
-                return ePlayerType.Person;
+                typeToReturn = ePlayerType.Person;
             }
             else
             {
-                return ePlayerType.Computer;
+                typeToReturn = ePlayerType.Computer;
             }
+            return typeToReturn;
         }
         
         private static bool IsIntOrQ(string i_String)
