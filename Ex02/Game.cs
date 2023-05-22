@@ -19,9 +19,7 @@ namespace Ex02
         public static bool IsRowMarked(Board i_Board, int i_RowIndex, eMark i_Mark)
         {
             bool rowCompleted = true;
-
-
-            for (int i = 0; i < i_Board.SequenceSize; i++)
+            for (int i = 0 ; i < i_Board.SequenceSize ; i++)
             {
                 if (i_Board.CellContent(i_RowIndex, i) != i_Mark)
                 {
@@ -37,7 +35,7 @@ namespace Ex02
             bool columnCompleted = true;
             eMark typeOfMark = i_Board.CellContent(0, i_ColumnIndex);
 
-            for (int i = 0; i < i_Board.SequenceSize; i++)
+            for (int i = 0 ; i < i_Board.SequenceSize ; i++)
             {
                 if (i_Board.CellContent(i, i_ColumnIndex) != i_Mark)
                 {
@@ -51,7 +49,7 @@ namespace Ex02
         public static bool isMainDiagonalMarked(Board i_Board, eMark i_Mark)
         {
             bool mainDiagonalCompleted = true;
-            for (int i = 0; i < i_Board.SequenceSize; i++)
+            for (int i = 0 ; i < i_Board.SequenceSize ; i++)
             {
                 if (i_Board.CellContent(i, i) != i_Mark)
                 {
@@ -66,7 +64,7 @@ namespace Ex02
         {
             bool secondaryDiagonalCompleted = true;
             
-            for (int i = i_Board.SequenceSize - 1; i >= 0; i--)
+            for (int i = i_Board.SequenceSize - 1 ; i >= 0 ; i--)
             {
                 if (i_Board.CellContent(i_Board.SequenceSize - 1 - i, i) != i_Mark)
                 {
