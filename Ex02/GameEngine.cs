@@ -61,7 +61,7 @@ namespace Ex02
                 }
                 IsGameOverWithVictory = true;
             }
-            this.m_IsGameEndWithTie = Board.IsBoardFull();
+            this.m_IsGameEndWithTie = Board.IsBoardFull() && !IsGameOverWithVictory;
             return this.m_IsGameEndWithTie || IsGameOverWithVictory;
         }
 
