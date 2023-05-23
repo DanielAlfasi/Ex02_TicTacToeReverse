@@ -10,7 +10,7 @@ namespace Ex02
     {
         private static eMark s_Mark = eMark.O;
 
-        public static int[] FindBestMove(Board board)
+        internal static int[] FindBestMove(Board board)
         {
             int bestScore = -int.MaxValue;
             int[] coords = new int[]{-1,-1};
@@ -22,7 +22,7 @@ namespace Ex02
                     {
                         board.UpdateBoard(i, j, s_Mark);
                         int score = minimax(board, 0, false);
-                        board.UndoUpdateBoard(i, j, eMark.Empty);
+                        board.UpdateBoard(i, j, eMark.Empty);
                         if (score > bestScore)
                         {
                             bestScore = score;
@@ -57,7 +57,7 @@ namespace Ex02
                         {
                             i_Board.UpdateBoard(i, j, s_Mark);
                             int score1 = minimax(i_Board, i_Depth + 1, false);
-                            i_Board.UndoUpdateBoard(i, j, eMark.Empty); // undo move
+                            i_Board.UpdateBoard(i, j, eMark.Empty);
                             bestScore = Math.Max(score1, bestScore);
                         }
                     }
@@ -75,7 +75,7 @@ namespace Ex02
                         {
                             i_Board.UpdateBoard(i, j, eMark.X);
                             int score2 = minimax(i_Board, i_Depth + 1, true);
-                            i_Board.UndoUpdateBoard(i, j, eMark.Empty);
+                            i_Board.UpdateBoard(i, j, eMark.Empty);
                             bestScore = Math.Min(score2, bestScore);
                         }
                     }

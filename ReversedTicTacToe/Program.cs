@@ -10,8 +10,8 @@ namespace Ex02
     {
         static void Main(string[] args)
         {
-            GameEngine ge = Runner.SetupGame();
-            Runner.RunGame(ge);
+            GameEngine gameToRun = Runner.SetupGame();
+            Runner.RunGame(gameToRun);
         }
     }
 }

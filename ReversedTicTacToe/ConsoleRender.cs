@@ -25,7 +25,7 @@ namespace Ex02
         public const string k_YesSign = "Y";
         public const string k_NoSign = "N";
 
-        public static void RenderBoard(Board i_Board)
+        internal static void RenderBoard(Board i_Board)
         {
             int length = i_Board.SequenceSize;
             Ex02.ConsoleUtils.Screen.Clear();
@@ -64,7 +64,7 @@ namespace Ex02
             Console.Write($"| {(char)i_Mark} ");
         }
 
-        public static void DisplayPlayersScore(Player[] i_Players)
+        internal static void DisplayPlayersScore(Player[] i_Players)
         {
             foreach (Player player in i_Players)
             {
@@ -72,18 +72,18 @@ namespace Ex02
             }
         }
 
-        public static void DisplayWinner(Player i_Player)
+        internal static void DisplayWinner(Player i_Player)
         {
             Console.WriteLine($"{i_Player.Mark} player Won");
         }
 
-        public static string DisplayRequest(string i_Request)
+        internal static string DisplayRequest(string i_Request)
         {
             Console.WriteLine(i_Request);
             return Console.ReadLine();
         }
 
-        public static void DisplayMessage(string i_Message)
+        internal static void DisplayMessage(string i_Message)
         {
             Console.WriteLine(i_Message);
         }

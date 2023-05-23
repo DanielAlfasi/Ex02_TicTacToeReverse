@@ -47,43 +47,44 @@ namespace Ex02
             return BoardState[i_RowIndex,i_ColumnIndex];
         }
 
-        public void UpdateBoard(int i_RowIndex, int i_ColumnIndex, eMark i_Mark)
+        internal void UpdateBoard(int i_RowIndex, int i_ColumnIndex, eMark i_Mark)
         {
             this.r_Board[i_RowIndex,i_ColumnIndex] = i_Mark;
-            this.m_NumberOfEmptyCells = m_NumberOfEmptyCells - 1;
+            if(i_Mark == eMark.Empty)
+            {
+                this.m_NumberOfEmptyCells++;
+            }
+            else
+            {
+                this.m_NumberOfEmptyCells--;
+            }
         }
 
-        public bool IsCellEmpty(int i_RowIndex, int i_ColumnIndex)
+        internal bool IsCellEmpty(int i_RowIndex, int i_ColumnIndex)
         {
-            return BoardState[i_RowIndex,i_ColumnIndex] == eMark.Empty;
+            return this.r_Board[i_RowIndex,i_ColumnIndex] == eMark.Empty;
         }
 
-        public bool IsBoardFull()
+        internal bool IsBoardFull()
         {
-            return NumberOfEmptyCells == 0;
+            return this.m_NumberOfEmptyCells == 0;
         }
 
         public bool IsInBoardBounds(int i_RowIndex, int i_ColumnIndex)
         {
-            return i_RowIndex >= 0 && i_ColumnIndex >= 0 && i_RowIndex < SequenceSize && i_ColumnIndex < SequenceSize;
+            return i_RowIndex >= 0 && i_ColumnIndex >= 0 && i_RowIndex < this.m_SequenceSize && i_ColumnIndex < this.m_SequenceSize;
         }
 
-        public void UndoUpdateBoard(int i_RowIndex, int i_ColumnIndex, eMark i_Mark)
+        internal void ResetBoard()
         {
-            this.r_Board[i_RowIndex,i_ColumnIndex] = i_Mark;
-            this.m_NumberOfEmptyCells++;
-        }
-
-        public void ResetBoard()
-        {
-            for (int i = 0 ; i < SequenceSize ; i++)
+            for (int i = 0 ; i < this.m_SequenceSize ; i++)
             {
-                for (int j = 0 ; j < SequenceSize ; j++)
+                for (int j = 0 ; j < this.m_SequenceSize ; j++)
                 {
                     this.r_Board[i,j] = eMark.Empty;
                 }
             }
-            m_NumberOfEmptyCells = SequenceSize * SequenceSize;
+            this.m_NumberOfEmptyCells = this.m_SequenceSize * this.m_SequenceSize;
         }
     }
 }

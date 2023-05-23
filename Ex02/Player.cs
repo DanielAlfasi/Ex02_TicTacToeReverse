@@ -14,14 +14,14 @@ namespace Ex02
 
         public Player(eMark i_Mark, ePlayerType i_PlayerType)
         {
-            m_Mark = i_Mark;
-            m_PlayerType = i_PlayerType; 
-            m_Score = 0;
+            this.m_Mark = i_Mark;
+            this.m_PlayerType = i_PlayerType; 
+            this.m_Score = 0;
         }
 
         public ePlayerType PlayerType
         {
-            get { return m_PlayerType; }
+            get { return this.m_PlayerType; }
         }
 
         public eMark Mark
@@ -31,8 +31,8 @@ namespace Ex02
 
         public int Score
         { 
-            get { return m_Score; } 
-            set { m_Score = value; }
+            get { return this.m_Score; } 
+            set { this.m_Score = value; }
         }
     }
 }

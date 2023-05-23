@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8440A76C-E773-433B-8457-8CCBD0EDFC1B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Ex02</RootNamespace>
-    <AssemblyName>Ex02</AssemblyName>
+    <ProjectGuid>{38697632-3710-44C5-AF04-02E278AAA044}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ReversedTicTacToe</RootNamespace>
+    <AssemblyName>ReversedTicTacToe</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,25 +32,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Board.cs" />
-    <Compile Include="ComputerPlayer.cs" />
-    <Compile Include="ePlayerType.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="GameEngine.cs" />
-    <Compile Include="eMark.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="ConsoleRender.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Runner.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Ex02.ConsoleUtils">
       <HintPath>..\..\..\B23 Ex02 Gal 207231945 Daniel 318601622\Ex02.ConsoleUtils.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ex02\Ex02.csproj">
+      <Project>{8440a76c-e773-433b-8457-8ccbd0edfc1b}</Project>
+      <Name>Ex02</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

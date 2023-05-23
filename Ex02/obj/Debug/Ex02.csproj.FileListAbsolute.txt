@@ -1,10 +1,9 @@
 \\Mac\Home\Desktop\Computer-Science\c#\B23 Ex02 GalBotzer 207231945 DanielAlfasi 318601622\Ex02\Ex02\Ex02\obj\Debug\Ex02.csproj.AssemblyReference.cache
-\\Mac\Home\Desktop\Computer-Science\c#\B23 Ex02 GalBotzer 207231945 DanielAlfasi 318601622\Ex02\Ex02\Ex02\obj\Debug\Ex02.csproj.SuggestedBindingRedirects.cache
 \\Mac\Home\Desktop\Computer-Science\c#\B23 Ex02 GalBotzer 207231945 DanielAlfasi 318601622\Ex02\Ex02\Ex02\obj\Debug\Ex02.csproj.CoreCompileInputs.cache
-\\Mac\Home\Desktop\Computer-Science\c#\B23 Ex02 GalBotzer 207231945 DanielAlfasi 318601622\Ex02\Ex02\Ex02\bin\Debug\Ex02.exe.config
-\\Mac\Home\Desktop\Computer-Science\c#\B23 Ex02 GalBotzer 207231945 DanielAlfasi 318601622\Ex02\Ex02\Ex02\bin\Debug\Ex02.exe
 \\Mac\Home\Desktop\Computer-Science\c#\B23 Ex02 GalBotzer 207231945 DanielAlfasi 318601622\Ex02\Ex02\Ex02\bin\Debug\Ex02.pdb
 \\Mac\Home\Desktop\Computer-Science\c#\B23 Ex02 GalBotzer 207231945 DanielAlfasi 318601622\Ex02\Ex02\Ex02\bin\Debug\Ex02.ConsoleUtils.dll
 \\Mac\Home\Desktop\Computer-Science\c#\B23 Ex02 GalBotzer 207231945 DanielAlfasi 318601622\Ex02\Ex02\Ex02\obj\Debug\Ex02.csproj.CopyComplete
-\\Mac\Home\Desktop\Computer-Science\c#\B23 Ex02 GalBotzer 207231945 DanielAlfasi 318601622\Ex02\Ex02\Ex02\obj\Debug\Ex02.exe
 \\Mac\Home\Desktop\Computer-Science\c#\B23 Ex02 GalBotzer 207231945 DanielAlfasi 318601622\Ex02\Ex02\Ex02\obj\Debug\Ex02.pdb
+\\Mac\Home\Desktop\Computer-Science\c#\B23 Ex02 GalBotzer 207231945 DanielAlfasi 318601622\Ex02\Ex02\Ex02\bin\Debug\Ex02.dll.config
+\\Mac\Home\Desktop\Computer-Science\c#\B23 Ex02 GalBotzer 207231945 DanielAlfasi 318601622\Ex02\Ex02\Ex02\bin\Debug\Ex02.dll
+\\Mac\Home\Desktop\Computer-Science\c#\B23 Ex02 GalBotzer 207231945 DanielAlfasi 318601622\Ex02\Ex02\Ex02\obj\Debug\Ex02.dll
