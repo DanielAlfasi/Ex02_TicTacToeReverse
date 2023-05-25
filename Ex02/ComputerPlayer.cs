@@ -10,7 +10,7 @@ namespace Ex02
         private static Random s_RandomGenerator = new Random();
         private const int k_ReturnValueForGoodScore = 1;
         private const int k_ReturnValueForBadScore = -1;
-        private const int ScoreForTie = 0;
+        private const int k_ScoreForTie = 0;
         private const int k_RecursionMaxDepth = 9;
         private const bool k_PlayerToMax = true;
         private const bool k_PlayerToMin = false;
@@ -68,7 +68,7 @@ namespace Ex02
             }
             else if (i_Board.IsBoardFull())
             {
-                scoreToReturn = ScoreForTie;
+                scoreToReturn = k_ScoreForTie;
             }
             else if (i_MinOrMax)
             {

@@ -38,7 +38,8 @@ namespace Ex02
 
         internal static void DisplayWinner(Player i_Player)
         {
-            Console.WriteLine($"The Player with the '{i_Player.Mark}' player Won");
+            Console.WriteLine();
+            Console.WriteLine($"The Player with the '{i_Player.Mark}' Mark have Won");
             Console.WriteLine();
         }
 
