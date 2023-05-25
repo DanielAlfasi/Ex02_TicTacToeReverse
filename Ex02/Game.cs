@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ex02
+﻿namespace Ex02
 {
     public static class Game
     {
@@ -31,6 +25,11 @@ namespace Ex02
         {
             eMark markToCheck = i_Board.CellContent(i_RowIndex, i_ColumnIndex);
             return isRowMarked(i_Board, i_RowIndex, markToCheck) || isColumnMarked(i_Board, i_ColumnIndex, markToCheck) || isMainDiagonalMarked(i_Board, markToCheck) || isSecondaryDiagonalMarked(i_Board, markToCheck);
+        }
+
+        internal static bool IsValidMove(int i_RowIndex, int i_ColumnIndex, Board i_Board)
+        {
+            return i_Board.IsInBoardBounds(i_RowIndex, i_ColumnIndex) && i_Board.IsCellEmpty(i_RowIndex, i_ColumnIndex);
         }
 
         private static bool isRowMarked(Board i_Board, int i_RowIndex, eMark i_Mark)
@@ -89,9 +88,5 @@ namespace Ex02
             return secondaryDiagonalCompleted;
         }
 
-        internal static bool IsValidMove(int i_RowIndex, int i_ColumnIndex, Board i_Board)
-        {
-            return i_Board.IsInBoardBounds(i_RowIndex, i_ColumnIndex) && i_Board.IsCellEmpty(i_RowIndex, i_ColumnIndex);
-        }
     }
 }

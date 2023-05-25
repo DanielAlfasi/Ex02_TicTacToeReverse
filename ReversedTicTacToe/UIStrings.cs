@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ReversedTicTacToe
+﻿namespace Ex02
 {
     public static class UIStrings
     {
@@ -14,14 +8,20 @@ namespace ReversedTicTacToe
         private const string k_GameModeRequestInvalid = "Invalid input, Please enter game mode, press 1 for PvP or 2 for PvC";
         private const string k_ColumnNumberRequest = "Please enter the column number: ";
         private const string k_RowNumberRequest = "Please enter the row number: ";
-        private const string k_PlayAnotherRoundRequest = "Would you like to play another round? \nPress Y for yes \nPress N for no: ";
-        private const string k_PlayAnotherRoundRequestInvalid = "Invalid input, Would you like to play another round? \nPress Y for yes \nPress N for no: ";
+        private const string k_PlayAnotherRoundRequest = "Would you like to play another round? \nPress Y for yes \nPress N for no ";
+        private const string k_PlayAnotherRoundRequestInvalid = "Invalid input, Would you like to play another round? \nPress Y for yes \nPress N for no ";
         private const string k_GameEndWithTieMessage = "The game is over with tie";
         private const string k_OutOfBoundsMessage = "The coords you entered are invalid";
         private const string k_CellIsMarkedMessage = "This cell is already marked, try again";
+        private const string k_WelcomeMessage = "Welcome to Reversed TicTacToe created by Gal Botzer and Daniel Alfasi";
         private const string k_QuitSign = "Q";
         private const string k_YesSign = "Y";
         private const string k_NoSign = "N";
+
+        public static string WelcomeMessage
+        {
+            get { return k_WelcomeMessage; }
+        }
 
         public static string BoardSizeRequest
         {
@@ -92,5 +92,6 @@ namespace ReversedTicTacToe
         {
             get { return k_NoSign; }
         }
+
     }
 }

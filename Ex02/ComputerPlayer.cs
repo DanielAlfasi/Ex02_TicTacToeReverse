@@ -1,125 +1,156 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex02
 {
     public static class ComputerPlayer
     {
-        private static eMark s_Mark = eMark.O;
+        private static eMark s_ComputerPlayerMark = eMark.O;
+        private static eMark s_HumanPlayerMark = eMark.X;
+        private static eMark s_EmptyMark = eMark.Empty;
+        private static Random s_RandomGenerator = new Random();
+        private const int k_ReturnValueForGoodScore = 1;
+        private const int k_ReturnValueForBadScore = -1;
+        private const int ScoreForTie = 0;
+        private const int k_RecursionMaxDepth = 9;
+        private const bool k_PlayerToMax = true;
+        private const bool k_PlayerToMin = false;
 
-        internal static int[] FindBestMove(Board board)
+        public static (int, int) GetNextMove(Board i_Board)
         {
-            int bestScore = -int.MaxValue;
-            int[] coords = new int[]{-1,-1};
-            for (int i = 0 ; i < board.SequenceSize ; i++)
-            {
-                for (int j = 0 ; j < board.SequenceSize ; j++)
-                {
-                    if (board.IsCellEmpty(i, j))
-                    {
-                        board.UpdateBoard(i, j, s_Mark);
-                        int score = minimax(board, 0, false);
-                        board.UpdateBoard(i, j, eMark.Empty);
-                        if (score > bestScore)
-                        {
-                            bestScore = score;
-                            coords[0] = i;
-                            coords[1] = j;
-                        }
-                    }
-                }
-            }
-            return coords;
-        }
+            int bestScoreForMove = int.MinValue;
+            int scoreForCurrentMove;
+            (int, int) bestMoveCoords = (-1, -1);
 
-        private static int minimax(Board i_Board, int i_Depth, bool i_IsMaximizing)
-        {
-            int valueToReturn;
-            int score = evaluateBoard(i_Board);
-            if (score == 1 || score == -1)
+            if (i_Board.NumberOfEmptyCells <= k_RecursionMaxDepth)
             {
-                valueToReturn = score;
-            }
-            else if (!i_Board.IsBoardFull())
-            {
-                valueToReturn = 0;
-            } else if(i_IsMaximizing)
-            {
-                int bestScore = -int.MaxValue;
-                for (int i = 0 ; i < i_Board.SequenceSize ; i++)
+                for (int i = 0; i < i_Board.SequenceSize; i++)
                 {
-                    for (int j = 0 ; j < i_Board.SequenceSize ; j++)
+                    for (int j = 0; j < i_Board.SequenceSize; j++)
                     {
                         if (i_Board.IsCellEmpty(i, j))
                         {
-                            i_Board.UpdateBoard(i, j, s_Mark);
-                            int score1 = minimax(i_Board, i_Depth + 1, false);
-                            i_Board.UpdateBoard(i, j, eMark.Empty);
-                            bestScore = Math.Max(score1, bestScore);
+                            i_Board.UpdateBoard(i, j, s_ComputerPlayerMark);
+                            scoreForCurrentMove = miniMax(i_Board, 0, k_PlayerToMin, i, j);
+                            i_Board.UpdateBoard(i, j, s_EmptyMark);
+                            if (scoreForCurrentMove > bestScoreForMove)
+                            {
+                                bestMoveCoords = (i, j);
+                                bestScoreForMove = scoreForCurrentMove;
+                            }
                         }
                     }
                 }
-                valueToReturn = bestScore;
+            }
+            if (scoreHaveNotAssignedByTree(bestScoreForMove))
+            {
+                bestMoveCoords = generateEmptyRandomCell(i_Board);
+            }
+
+            return bestMoveCoords;
+        }
+
+        private static int miniMax(Board i_Board, int i_Depth, bool i_MinOrMax, int i_LastRowModified, int i_LastColumnModified)
+        {
+            int bestScore, currentMoveScore, scoreToReturn;
+
+
+            if (i_Depth > k_RecursionMaxDepth)
+            {
+                scoreToReturn = valueForMaxDepth(i_MinOrMax);
+            }
+            else if (checkIfSpecificPlayerWon(i_Board, i_LastRowModified, i_LastColumnModified, s_ComputerPlayerMark))
+            {
+                scoreToReturn = k_ReturnValueForBadScore;
+            }
+            else if (checkIfSpecificPlayerWon(i_Board, i_LastRowModified, i_LastColumnModified, s_HumanPlayerMark))
+            {
+                scoreToReturn = k_ReturnValueForGoodScore;
+            }
+            else if (i_Board.IsBoardFull())
+            {
+                scoreToReturn = ScoreForTie;
+            }
+            else if (i_MinOrMax)
+            {
+                bestScore = int.MinValue;
+                for (int i = 0; i < i_Board.SequenceSize; i++)
+                {
+                    for (int j = 0; j < i_Board.SequenceSize; j++)
+                    {
+                        if (i_Board.IsCellEmpty(i, j))
+                        {
+                            i_Board.UpdateBoard(i, j, s_ComputerPlayerMark);
+                            currentMoveScore = miniMax(i_Board, i_Depth + 1, k_PlayerToMin, i, j);
+                            i_Board.UpdateBoard(i, j, s_EmptyMark);
+
+                            if(bestScore < currentMoveScore)
+                            {
+                                bestScore = currentMoveScore;
+                            }
+                        }
+                    }
+                }
+                scoreToReturn = bestScore;
             }
             else
             {
-                int bestScore = int.MaxValue;
-                for (int i = 0 ; i < i_Board.SequenceSize ; i++)
+                bestScore = int.MaxValue;
+                for (int i = 0; i < i_Board.SequenceSize; i++)
                 {
-                    for (int j = 0 ; j < i_Board.SequenceSize ; j++)
+                    for (int j = 0; j < i_Board.SequenceSize; j++)
                     {
                         if (i_Board.IsCellEmpty(i, j))
                         {
-                            i_Board.UpdateBoard(i, j, eMark.X);
-                            int score2 = minimax(i_Board, i_Depth + 1, true);
-                            i_Board.UpdateBoard(i, j, eMark.Empty);
-                            bestScore = Math.Min(score2, bestScore);
+                            i_Board.UpdateBoard(i, j, s_HumanPlayerMark);
+                            currentMoveScore = miniMax(i_Board, i_Depth + 1, k_PlayerToMax, i, j);
+                            i_Board.UpdateBoard(i, j, s_EmptyMark);
+
+                            if (bestScore > currentMoveScore)
+                            {
+                                bestScore = currentMoveScore;
+                            }
                         }
                     }
                 }
-                valueToReturn = bestScore;
+                scoreToReturn = bestScore;
             }
-            return valueToReturn;
+
+            return scoreToReturn;
         }
 
-        private static int evaluateBoard(Board i_Board)
+        private static int valueForMaxDepth(bool i_IsPlayerMinOrMax)
         {
-            int valueToReturn = 0;
-            bool breakLoops = false;
-            for(int i = 0 ; i < i_Board.SequenceSize ; i++)
+            int valueForMinOrMax;
+
+            if (i_IsPlayerMinOrMax)
             {
-                for (int j = 0 ; j < i_Board.SequenceSize ; j++)
-                {
-                    if (Game.IsVictory(i_Board, i, j))
-                    {
-                        if(i_Board.CellContent(i, j) == eMark.O)
-                        {
-                            valueToReturn = -1;
-                            break;
-                        }
-                        else if(i_Board.CellContent(i, j) == eMark.X)
-                        {
-                            valueToReturn = 1;
-                            break;
-                        }
-                        else
-                        {
-                            valueToReturn = 0;
-                            break;
-                        }
-                    }
-                }
-                if (breakLoops)
-                {
-                    break;
-                }
-
+                valueForMinOrMax = int.MaxValue;
             }
-            return valueToReturn;
-        }
-    }
+            else
+            {
+                valueForMinOrMax = int.MinValue;
+            }
 
+            return valueForMinOrMax;
+        }
+
+        private static bool checkIfSpecificPlayerWon(Board i_Board, int i_RowIndex, int i_ColumnIndex, eMark i_PlayerMark)
+        {
+            return Game.IsVictory(i_Board, i_RowIndex, i_ColumnIndex) && i_Board.CellContent(i_RowIndex
+                , i_ColumnIndex) == i_PlayerMark;
+        }
+
+        private static (int, int) generateEmptyRandomCell(Board i_Board)
+        {
+            int NumberOfFreeCells = s_RandomGenerator.Next(i_Board.EmptyCellsList.Count);
+
+            return i_Board.EmptyCellsList[NumberOfFreeCells];
+        }
+
+        private static bool scoreHaveNotAssignedByTree(int i_ScoreToCheck)
+        {
+            return i_ScoreToCheck == int.MinValue || i_ScoreToCheck == int.MaxValue;
+        }
+
+    }  
 }

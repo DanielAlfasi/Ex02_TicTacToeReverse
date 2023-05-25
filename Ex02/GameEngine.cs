@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ex02
+﻿namespace Ex02
 {
     public class GameEngine
     {
@@ -52,6 +45,7 @@ namespace Ex02
         public bool IsGameOver()
         {
             bool IsGameOverWithVictory = false;
+
             if (Board.CellContent(this.m_LastRowModified, this.m_LastColumnModified) != eMark.Empty && Game.IsVictory(this.m_Board, this.m_LastRowModified, this.m_LastColumnModified))
             {
                 if (Board.CellContent(this.m_LastRowModified, this.m_LastColumnModified) == eMark.X)
@@ -78,6 +72,7 @@ namespace Ex02
         public bool PerformMove(int i_RowIndex, int i_ColumnIndex)
         {
             bool isMoveWasPerformed = false;
+
             if(Game.IsValidMove(i_RowIndex, i_ColumnIndex, this.m_Board))
             {
                 PerformPlayerMove(i_RowIndex, i_ColumnIndex);
@@ -91,24 +86,6 @@ namespace Ex02
             return isMoveWasPerformed;
         }
 
-        public void PerformPlayerMove(int i_RowIndex, int i_ColumnIndex)
-        {
-            this.m_Board.UpdateBoard(i_RowIndex, i_ColumnIndex, this.m_Players[(m_PlayerTurnIndex % 2)].Mark);
-            this.m_LastRowModified = i_RowIndex;
-            this.m_LastColumnModified = i_ColumnIndex;
-            this.m_PlayerTurnIndex++;
-        }
-
-        public void PerformComputerMove()
-        {
-                int[] coords = new int[2];
-                coords = ComputerPlayer.FindBestMove(this.m_Board);
-                this.m_Board.UpdateBoard(coords[0], coords[1], k_SecondPlayerMark);
-                this.m_LastRowModified = coords[0];
-                this.m_LastColumnModified = coords[1];
-                this.m_PlayerTurnIndex++;
-        }
-
         public void ResetGame()
         {
             this.m_Board.ResetBoard();
@@ -116,6 +93,23 @@ namespace Ex02
             this.m_LastRowModified = 0;
             this.m_LastColumnModified = 0;
             this.m_IsGameEndWithTie = false;
+        }
+
+        private void PerformPlayerMove(int i_RowIndex, int i_ColumnIndex)
+        {
+            this.m_Board.UpdateBoard(i_RowIndex, i_ColumnIndex, this.m_Players[(m_PlayerTurnIndex % 2)].Mark);
+            this.m_LastRowModified = i_RowIndex;
+            this.m_LastColumnModified = i_ColumnIndex;
+            this.m_PlayerTurnIndex++;
+        }
+
+        private void PerformComputerMove()
+        {   
+            (int rowIndex, int columnIndex) = ComputerPlayer.GetNextMove(this.m_Board);
+            this.m_Board.UpdateBoard(rowIndex, columnIndex, k_SecondPlayerMark);
+            this.m_LastRowModified = rowIndex;
+            this.m_LastColumnModified = columnIndex;
+            this.m_PlayerTurnIndex++;
         }
 
     }

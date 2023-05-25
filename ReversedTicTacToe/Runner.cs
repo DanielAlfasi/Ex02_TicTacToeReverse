@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Lifetime;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace Ex02
 {
@@ -12,6 +6,7 @@ namespace Ex02
     {
         public static GameEngine SetupGame()
         {
+            ConsoleRender.DisplayWelcome();
             int boardSize = getBoardSize();
             ePlayerType secondPlayerType = getPlayerType();
             return new GameEngine(boardSize, secondPlayerType);
@@ -20,7 +15,8 @@ namespace Ex02
         public static void RunGame(GameEngine i_GameEngine)
         {
             bool userWantAnotherSession = true;
-            bool isGameOver = false;
+            bool isGameOver;
+
             while(userWantAnotherSession)
             {
                 isGameOver = runGameSession(i_GameEngine);
@@ -41,7 +37,7 @@ namespace Ex02
         {
             if (i_GameEngine.IsGameEndWithTie)
             {
-                ConsoleRender.DisplayMessage(ConsoleRender.k_GameEndWithTieMessage);
+                ConsoleRender.DisplayMessage(UIStrings.GameEndWithTieMessage);
             }
             else
             {
@@ -54,10 +50,11 @@ namespace Ex02
         {
             int rowIndex, columnIndex;
             bool isQNotRaised = true;
+
             ConsoleRender.RenderBoard(i_GameEngine.Board);
             while (!i_GameEngine.IsGameOver())
             {
-                if(!int.TryParse(getUserMove(ConsoleRender.k_RowNumberRequest), out rowIndex) || !int.TryParse(getUserMove(ConsoleRender.k_ColumnNumberRequest), out columnIndex))
+                if(!int.TryParse(getUserMove(UIStrings.RowNumberRequest), out rowIndex) || !int.TryParse(getUserMove(UIStrings.ColumnNumberRequest), out columnIndex))
                 {
                     isQNotRaised = false;
                     break;
@@ -81,11 +78,11 @@ namespace Ex02
         {
             if (i_GameEngine.Board.IsInBoardBounds(i_RowIndex, i_ColumnIndex))
             {
-                ConsoleRender.DisplayMessage(ConsoleRender.k_CellIsMarkedMessage);
+                ConsoleRender.DisplayMessage(UIStrings.CellIsMarkedMessage);
             }
             else
             {
-                ConsoleRender.DisplayMessage(ConsoleRender.k_OutOfBoundsMessage);
+                ConsoleRender.DisplayMessage(UIStrings.OutOfBoundsMessage);
             }
         }
 
@@ -101,17 +98,17 @@ namespace Ex02
 
         private static bool isInputYOrNValidator(string i_String)
         {
-            return i_String == ConsoleRender.k_NoSign || i_String == ConsoleRender.k_YesSign;
+            return i_String == UIStrings.NoSign || i_String == UIStrings.YesSign;
         }
 
         private static int getBoardSize()
         {
-            return int.Parse(userInputValidator(boardSizeValidator, ConsoleRender.k_BoardSizeRequest, ConsoleRender.k_BoardSizeRequestInvalid));
+            return int.Parse(userInputValidator(boardSizeValidator, UIStrings.BoardSizeRequest, UIStrings.BoardSizeRequestInvalid));
         }
 
         private static int getGameMode()
         {
-            return int.Parse(userInputValidator(playerTypeValidator, ConsoleRender.k_GameModeRequest, ConsoleRender.k_GameModeRequestInvalid));
+            return int.Parse(userInputValidator(playerTypeValidator, UIStrings.GameModeRequest, UIStrings.GameModeRequestInvalid));
         }
 
         private static string getUserMove(string i_RequestMessage)
@@ -122,12 +119,12 @@ namespace Ex02
 
         private static string getUserInputForReset()
         {
-            return userInputValidator(isInputYOrNValidator, ConsoleRender.k_PlayAnotherRoundRequest, ConsoleRender.k_PlayAnotherRoundRequestInvalid);
+            return userInputValidator(isInputYOrNValidator, UIStrings.PlayAnotherRoundRequest, UIStrings.PlayAnotherRoundRequestInvalid);
         }
 
         private static bool getUserInputForResetParsedToBool()
         {
-            return getUserInputForReset() == "Y";
+            return getUserInputForReset() == UIStrings.YesSign;
         }
 
         private static ePlayerType getPlayerType()
@@ -146,7 +143,7 @@ namespace Ex02
         
         private static bool isInputIsIntOrQ(string i_String)
         {
-            return int.TryParse(i_String, out int validInt) || i_String == ConsoleRender.k_QuitSign;
+            return int.TryParse(i_String, out int validInt) || i_String == UIStrings.QuitSign;
         }
 
         private static string userInputValidator(Func <string, bool> i_ValidationFunction, string i_RequestMessage, string i_RequestMessageForInvalidInput)
